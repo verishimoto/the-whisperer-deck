@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Card, CardProps } from '@/components/Card';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { categoryStyles } from '@/config/categoryStyles'; // Make sure this path is correct
 
 // MOCK DATA (Replace with your actual data)
@@ -25,12 +27,15 @@ const SortIcon = () => (
 
 export default function HacksPage() {
   const [activeFilter, setActiveFilter] = useState('All');
+  const [costMode, setCostMode] = useState('flash'); // 'flash' or 'pro'
   const filters = ['All', ...Object.keys(categoryStyles)];
 
   // Creates 3 columns for the card grid
   const columns = Array.from({ length: 3 }, (_, colIndex) =>
     mockHacks.filter((_, itemIndex) => itemIndex % 3 === colIndex)
   );
+  
+  const cost = costMode === 'flash' ? '0.01' : '0.15';
 
   return (
     // Main page container with black border and large radius
@@ -87,6 +92,20 @@ export default function HacksPage() {
                 <SortIcon />
                 <span className="sr-only">Sort items</span>
             </Button>
+        </div>
+      </div>
+      
+      {/* Cost Toggle and Display */}
+      <div className="flex items-center justify-center gap-4 my-8">
+        <Label htmlFor="cost-mode" className="text-white/70">Gemini Flash</Label>
+        <Switch
+          id="cost-mode"
+          checked={costMode === 'pro'}
+          onCheckedChange={() => setCostMode(prev => prev === 'flash' ? 'pro' : 'flash')}
+        />
+        <Label htmlFor="cost-mode" className="text-white/70">The Magic Whisperer</Label>
+        <div className="text-white/80 font-mono text-lg ml-4">
+          Cost: <span className="font-bold text-white">{cost}</span> / token
         </div>
       </div>
 
