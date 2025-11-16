@@ -1,21 +1,15 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const cardContainer = document.getElementById('card-container');
 
-    // Fetch the prompts from our own API
     fetch('/api/prompts')
         .then(response => response.json())
         .then(prompts => {
-            if (!cardContainer) return;
-
-            // Clear any existing content
-            cardContainer.innerHTML = '';
-
-            // Loop through each prompt and create a card
             prompts.forEach(prompt => {
                 const card = document.createElement('div');
                 card.className = 'card';
 
-                const category = document.createElement('span');
+                const category = document.createElement('div');
                 category.className = 'category';
                 category.textContent = prompt.category;
 
@@ -34,8 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error fetching prompts:', error);
-            if (cardContainer) {
-                cardContainer.innerHTML = '<p style="color: #ff8a8a;">Failed to load prompts. Is the server running correctly?</p>';
-            }
+            cardContainer.innerHTML = '<p style="color: red;">Error loading prompts. Is the server running? Check the console for details.</p>';
         });
 });
