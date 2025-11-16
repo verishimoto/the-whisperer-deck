@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     color: #f0f0f0;
+    overflow: auto;
     /* --- Background Image with Dark Overlay --- */
     background-image: linear-gradient(rgba(10, 10, 25, 0.85), rgba(10, 10, 25, 0.95)), url('https://i.imgur.com/RAn1q45.jpeg'); /* Using a placeholder image */
     background-size: cover;
