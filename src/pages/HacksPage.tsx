@@ -1,7 +1,5 @@
-// src/pages/HacksPage.tsx
 
 import { useState, useEffect } from 'react';
-import { Card, CardProps } from '@/components/Card';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -9,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { categoryStyles } from '@/config/categoryStyles';
 import { runAllSocraticTests } from '@/socratic-tests';
 import { prompts as whispererHacks } from '../prompts';
+import { BioluminescentCard } from '../components/BioluminescentCard';
 
 const SortIcon = () => (
   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,7 +15,7 @@ const SortIcon = () => (
   </svg>
 );
 
-export default function HacksPage() {
+export default function HacksPage({ selectedCards, onCardSelect }) {
   const [activeFilter, setActiveFilter] = useState('All');
   const [costMode, setCostMode] = useState<'flash' | 'pro'>('flash');
   const filters = ['All', ...Object.keys(categoryStyles)];
@@ -36,7 +35,7 @@ export default function HacksPage() {
   return (
     <div className="m-4 p-8 border-[5px] border-black bg-[#111] rounded-[48px]">
       <header className="mb-12 text-center">
-        <p style={{ fontFamily: '"Helvetica Neue Condensed", "Arial Narrow", sans-serif', fontWeight: 100, letterSpacing: '0.1em' }} className="text-sm uppercase text-gray-400/50 mb-2">MASTER GRID</p>
+        <p style={{ fontFamily: '\"Helvetica Neue Condensed\", \"Arial Narrow\", sans-serif', fontWeight: 100, letterSpacing: '0.1em' }} className="text-sm uppercase text-gray-400/50 mb-2">MASTER GRID</p>
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter">The Whisperer Deck</h1>
         <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">A curated collection of Socratic & philosophical strategies to elevate your reasoning.</p>
       </header>
@@ -82,7 +81,16 @@ export default function HacksPage() {
         {columns.map((column, colIndex) => (
           <div key={colIndex} className="flex flex-col gap-6">
             {column.map(hack => (
-              <Card key={hack.id} {...hack} />
+               <BioluminescentCard 
+                key={hack.id} 
+                cardData={hack}
+                title={hack.title} 
+                category={hack.category}
+                isSelected={selectedCards.some(c => c.id === hack.id)}
+                onSelect={() => onCardSelect(hack)}
+              >
+                {hack.content}
+              </BioluminescentCard>
             ))}
           </div>
         ))}
