@@ -1,3 +1,4 @@
+
 import express, { Express, Request, Response } from 'express';
 import path from 'path';
 import { prompts } from './prompts';
@@ -5,8 +6,8 @@ import { prompts } from './prompts';
 const app: Express = express();
 const port = process.env.PORT || 8080;
 
-// Middleware to serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, '../public')));
+// Serve the static files from the Vite build directory
+app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use(express.json());
 
@@ -22,7 +23,7 @@ app.get('/health', (req: Request, res: Response) => {
 
 // All other GET requests return the frontend's index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public', 'index.html'));
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 app.listen(port, () => {
