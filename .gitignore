@@ -1,0 +1,12 @@
+
+# Dependencies
+/node_modules
+
+# Build artifacts
+/dist
+
+# Log files
+*.log
+
+# IDE specific
+.idea
