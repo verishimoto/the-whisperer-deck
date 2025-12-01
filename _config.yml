@@ -1,0 +1,13 @@
+title: The Whisperer Deck
+email: your-email@example.com # Replace with your email
+description: >- # This "description" will be used in the site's <meta> tag for SEO
+  A captivating project for The Whisperer Deck.
+baseurl: "/the-whisperer-deck" # Crucial for project sites, matches your repository name
+url: "https://verishimoto.github.io" # Your GitHub Pages base URL
+
+# Build settings
+markdown: kramdown # You can use 'kramdown' or 'GPM' for markdown processing
+theme: minima # A default Jekyll theme to get started; remove if you have a custom theme structure
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag # Useful for SEO optimization
