@@ -7,6 +7,9 @@ RUN npm install
 
 COPY . .
 
+# Build the client and server
+RUN npm run build
+
 EXPOSE 8080
 
 ENV PORT=8080

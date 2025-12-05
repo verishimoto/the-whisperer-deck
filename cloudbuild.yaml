@@ -1,31 +1,26 @@
 steps:
-  # Build the Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'build'
-      - '-t'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/whisperer-deck/whisperer-deck:latest'
-      - '-t'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/whisperer-deck/whisperer-deck:$SHORT_SHA'
-      - '.'
-
-  # Push the image to Artifact Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/whisperer-deck/whisperer-deck:latest'
-
-  # Deploy to Vertex AI
-  - name: 'gcr.io/cloud-builders/gke-deploy'
-    args:
-      - run
-      - --filename=.
-      - --image=us-central1-docker.pkg.dev/$PROJECT_ID/whisperer-deck/whisperer-deck:latest
-      - --location=us-central1
-
-images:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '-t'
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/whisperer-deck/whisperer-deck:latest'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/whisperer-deck/whisperer-deck:$SHORT_SHA'
+  - '.'
 
-options:
-  machineType: 'N1_HIGHCPU_8'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'push'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/whisperer-deck/whisperer-deck:latest'
+
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - 'whisperer-deck-frontend'
+  - '--image'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/whisperer-deck/whisperer-deck:latest'
+  - '--region'
+  - 'us-central1'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
