@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": false,
+    "outDir": "dist",
+    "target": "es2020",
+    "lib": ["es2020"],
+    "allowImportingTsExtensions": false
+  },
+  "include": ["src/index.ts", "src/prompts.ts"]
+}
